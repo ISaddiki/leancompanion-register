@@ -1,0 +1,9 @@
+{
+  "version": 2,
+  "functions": {
+    "api/register.js": { "runtime": "nodejs18.x" }
+  },
+  "routes": [
+    { "src": "^/api/register$", "dest": "api/register.js" }
+  ]
+}
