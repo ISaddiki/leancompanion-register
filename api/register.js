@@ -13,22 +13,25 @@ const box   = (v) => ({ checkbox: v === true || String(v).toLowerCase() === "tru
 
 // Edit the property names to match your Notion columns EXACTLY (accents, case)
 function mapToNotionProps(d) {
+  // Accept several possible field names from the form, but write to Notion with exact keys
+  const first = d["First name"] || d.firstName || d.FirstName || "";
+  const last  = d["Last name"]  || d.lastName  || d.LastName  || "";
+  const company = d["Company name"] || d.company || d.Company || "";
+  const emailVal = d.Email || d.email || "";
+  const phoneVal = d["Téléphone"] || d.Phone || d.phone || "";
+
   return {
-    // Your Title property name MUST match the first key here ("Name" by default)
-    "Name": title(d.Name || `${d["First Name"] || ""} ${d["Last Name"] || ""}`.trim()),
-    "Email": email(d.Email),
-    "Phone": phone(d.Phone),
-    "Company": rich(d.Company),
-    "Country": sel(d.Country),
-    "Role": sel(d.Role),
-    "Department": sel(d.Department),
-    "Headcount": num(d.Headcount),
-    "Hourly rate (€)": num(d["Hourly rate (€)"] || d.HourlyRate),
-    "Message": rich(d.Message),
-    "Language": sel(d.Language),
-    "Consent": box(d.Consent)
+    // 👉 Your Notion Title property MUST be this key. If your Title property is NOT “First name”,
+    // rename the key below to your real Title property name.
+    "First name": title(first),
+
+    "Last name":    rich(last),
+    "Company name": rich(company),
+    "Email":        email(emailVal),
+    "Téléphone":    phone(phoneVal)
   };
 }
+
 
 // Simple CORS: allow your domain(s)
 const ALLOWED = [
